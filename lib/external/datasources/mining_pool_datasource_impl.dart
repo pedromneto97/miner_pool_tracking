@@ -53,7 +53,7 @@ class MiningPoolDatasourceImplementation extends MiningPoolDatasource {
             poolInfo['minerReward'] = value;
             break;
           case 'poolStats':
-            poolInfo['networkHash'] = value['networkSols'];
+            poolInfo['networkHash'] = double.parse(value['networkSols']);
         }
       });
       return PoolInfo.fromJson(poolInfo);
