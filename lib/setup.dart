@@ -14,7 +14,6 @@ Future setup() async {
 
   const secureStorage = FlutterSecureStorage();
 
-  await secureStorage.delete(key: 'key');
   final containsEncryptionKey = await secureStorage.read(key: 'key');
   if (containsEncryptionKey == null) {
     final key = Hive.generateSecureKey();
