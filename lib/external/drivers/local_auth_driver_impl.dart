@@ -8,6 +8,7 @@ class LocalAuthDriverImplementation extends LocalAuthDriver {
   @override
   Future<bool> authenticate() async => _localAuth.authenticate(
         localizedReason: 'Authentication required to access your wallets',
+        stickyAuth: true,
       );
 
   @override
