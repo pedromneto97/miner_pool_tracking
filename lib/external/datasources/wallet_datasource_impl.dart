@@ -24,21 +24,19 @@ class WalletDatasourceImplementation extends WalletDatasource {
   }
 
   WalletDatasourceImplementation() {
-    awaitForBoxOpen = Future(
-      () async => secureStorage.read(key: 'key').then(
-        (key) {
-          final encryptionKey = base64Url.decode(key!);
+    awaitForBoxOpen = secureStorage.read(key: 'key').then(
+      (key) {
+        final encryptionKey = base64Url.decode(key!);
 
-          return Hive.openBox(
-            _boxName,
-            encryptionCipher: HiveAesCipher(encryptionKey),
-          ).then((openBox) {
-            _hiveBox = openBox;
-            _isBoxOpen = true;
-            return openBox;
-          });
-        },
-      ),
+        return Hive.openBox(
+          _boxName,
+          encryptionCipher: HiveAesCipher(encryptionKey),
+        ).then((openBox) {
+          _hiveBox = openBox;
+          _isBoxOpen = true;
+          return openBox;
+        });
+      },
     );
   }
 
