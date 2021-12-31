@@ -1,26 +1,26 @@
 import 'dart:convert';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'domain/domain.dart';
 import 'external/external.dart';
-import 'firebase_options.dart';
 import 'infra/infra.dart';
 import 'presenter/app/app_router.dart';
 
 Future setup() async {
+  await Hive.initFlutter();
+
   const secureStorage = FlutterSecureStorage();
 
-  final containsEncryptionKey = await secureStorage.containsKey(key: 'key');
-  if (!containsEncryptionKey) {
+  await secureStorage.delete(key: 'key');
+  final containsEncryptionKey = await secureStorage.read(key: 'key');
+  if (containsEncryptionKey == null) {
     final key = Hive.generateSecureKey();
-    await secureStorage.write(key: 'key', value: base64UrlEncode(key));
-  }
 
-  await Hive.initFlutter();
+    await secureStorage.write(key: 'key', value: base64Url.encode(key));
+  }
 
   GetIt.I.registerSingleton<AppRouter>(AppRouter());
 
@@ -39,8 +39,4 @@ Future setup() async {
   GetIt.I.registerLazySingleton<WalletService>(() => WalletServiceImplementation());
 
   GetIt.I.registerLazySingleton<MiningRepository>(() => MiningRepositoryImplementation());
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 }
