@@ -30,7 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
   dio: ^4.0.4
-  firebase_core: ^1.10.6
   get_it: ^7.2.0
   auto_route: ^3.2.0
   json_serializable: ^6.1.3
