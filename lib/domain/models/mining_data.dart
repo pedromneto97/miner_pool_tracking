@@ -14,6 +14,8 @@ class MiningData extends Equatable {
     required this.poolInfo,
   });
 
+  double get profitPerSec => minerInfo.average24h / poolInfo.estimatedRewardPerSec;
+
   @override
   List<Object?> get props => [minerInfo, poolInfo];
 }

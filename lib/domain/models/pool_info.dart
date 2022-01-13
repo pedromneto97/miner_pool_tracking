@@ -19,6 +19,8 @@ class PoolInfo extends Equatable {
 
   Map<String, dynamic> toJson() => _$PoolInfoToJson(this);
 
+  double get estimatedRewardPerSec => networkHash / blockTime * minerReward;
+
   @override
   List<Object?> get props => [minerReward, blockTime, networkHash];
 }
