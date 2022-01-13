@@ -46,7 +46,7 @@ class MiningInfoDetails extends StatelessWidget {
           height: 16,
         ),
         SizedBox(
-          height: 240,
+          height: 152,
           child: Card(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
