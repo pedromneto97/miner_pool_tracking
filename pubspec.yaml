@@ -39,6 +39,8 @@ dependencies:
   local_auth: ^1.1.9
   flutter_masked_text2: ^0.9.1
   flutter_secure_storage: ^5.0.2
+  intl: ^0.17.0
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:
