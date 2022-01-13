@@ -89,7 +89,7 @@ class MiningInfoTable extends StatelessWidget {
   }
 
   TableRow _getRowForData({required double time, required String timeString}) {
-    final totalReward = miningData.profitPerSec * time;
+    final totalReward = miningData.estimatedRewardPerSec * time;
     final receipt = totalReward * miningData.cryptoToUSDRate;
     final energyCost = GetIt.I<SettingsService>().settings.energyCost;
     final costs = consumption / 1000 * (time / 3600) * energyCost;
