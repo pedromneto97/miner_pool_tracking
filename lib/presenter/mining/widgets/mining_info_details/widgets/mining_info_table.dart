@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../domain/domain.dart';
+import '../../../../../domain/domain.dart';
+import '../../../../../utils/string_extension.dart';
+import '../../../bloc/mining_info_bloc.dart';
 
 class MiningInfoTable extends StatelessWidget {
-  final double profitPerSec;
   final MiningData miningData;
   final int consumption;
 
   const MiningInfoTable({
     Key? key,
-    required this.profitPerSec,
     required this.miningData,
     required this.consumption,
   }) : super(key: key);
@@ -24,9 +25,9 @@ class MiningInfoTable extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       children: [
-        const TableRow(
+        TableRow(
           children: [
-            TableCell(
+            const TableCell(
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
@@ -36,27 +37,46 @@ class MiningInfoTable extends StatelessWidget {
               ),
             ),
             TableCell(
-              child: Text(
-                'Reward',
-                textAlign: TextAlign.center,
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: BlocSelector<MiningInfoBloc, MiningInfoState, String>(
+                  selector: (state) {
+                    return (state as MiningInfoSuccess).wallet.symbol.name;
+                  },
+                  builder: (context, state) {
+                    return Text(
+                      'Est. Reward (${state.capitalize()})',
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
               ),
             ),
-            TableCell(
-              child: Text(
-                'Receipt',
-                textAlign: TextAlign.center,
+            const TableCell(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Receipt (USD)',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            TableCell(
-              child: Text(
-                'Costs',
-                textAlign: TextAlign.center,
+            const TableCell(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Costs (USD)',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-            TableCell(
-              child: Text(
-                'Profit',
-                textAlign: TextAlign.center,
+            const TableCell(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Profit (USD)',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],
@@ -69,7 +89,7 @@ class MiningInfoTable extends StatelessWidget {
   }
 
   TableRow _getRowForData({required double time, required String timeString}) {
-    final totalReward = profitPerSec * time;
+    final totalReward = miningData.profitPerSec * time;
     final receipt = totalReward * miningData.cryptoToUSDRate;
     final energyCost = GetIt.I<SettingsService>().settings.energyCost;
     final costs = consumption / 1000 * (time / 3600) * energyCost;
