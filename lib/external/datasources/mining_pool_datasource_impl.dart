@@ -28,7 +28,14 @@ class MiningPoolDatasourceImplementation extends MiningPoolDatasource {
             miningPoolInfoMap['average7d'] = double.parse(value);
             break;
           case 'balance':
-            miningPoolInfoMap['balance'] = value;
+            miningPoolInfoMap['pending'] = value;
+            break;
+          case 'immature':
+            miningPoolInfoMap['unpaid'] = value;
+            break;
+          case 'paid':
+            miningPoolInfoMap['totalPaid'] = value;
+            break;
         }
       });
 
