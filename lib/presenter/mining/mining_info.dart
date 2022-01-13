@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../utils/string_extension.dart';
 import '../../domain/domain.dart';
-import 'widgets/mining_info_table.dart';
+import '../../utils/image_utils.dart';
+import 'bloc/mining_info_bloc.dart';
+import 'widgets/mining_info_details/mining_info_details.dart';
 
 class MiningInfoPage extends StatefulWidget {
   final Wallet wallet;
@@ -17,81 +21,89 @@ class MiningInfoPage extends StatefulWidget {
 }
 
 class _MiningInfoPageState extends State<MiningInfoPage> {
-  final notifier = ValueNotifier<MiningData?>(null);
-  final consumptionController = TextEditingController(text: '0');
+  final consumptionController = TextEditingController(text: '');
 
   @override
   void initState() {
     super.initState();
-    const MiningInfoUseCase().call(widget.wallet).then(
-      (MiningData value) {
-        notifier.value = value;
-      },
-    );
   }
 
   @override
   void dispose() {
-    notifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.wallet.address),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+    return BlocProvider(
+      lazy: false,
+      create: (context) => MiningInfoBloc()
+        ..add(
+          GetMiningDataEvent(
+            wallet: widget.wallet,
+          ),
+        ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: consumptionController,
-                      decoration: InputDecoration(
-                        label: const Text('Consumption'),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        suffixText: 'W',
-                        contentPadding: const EdgeInsets.all(16),
-                      ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
+              Image.network(
+                imageUrlFromCoinSymbol(widget.wallet.symbol),
+                width: 24,
+                height: 24,
               ),
-              ValueListenableBuilder<MiningData?>(
-                valueListenable: notifier,
-                builder: (_, miningData, __) {
-                  if (miningData == null) {
-                    return const CircularProgressIndicator();
-                  }
-                  final profitSec = miningData.minerInfo.average24h /
-                      miningData.poolInfo.networkHash /
-                      miningData.poolInfo.blockTime *
-                      miningData.poolInfo.minerReward;
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: ValueListenableBuilder<TextEditingValue>(
-                      builder: (_, consumption, __) => MiningInfoTable(
-                        profitPerSec: profitSec,
-                        miningData: miningData,
-                        consumption: consumption.text.isEmpty ? 0 : int.parse(consumption.text),
-                      ),
-                      valueListenable: consumptionController,
-                    ),
-                  );
-                },
+              const SizedBox(width: 16),
+              Text(
+                '${widget.wallet.symbol.name.capitalize()} wallet',
               ),
             ],
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: consumptionController,
+                        decoration: InputDecoration(
+                          label: const Text('Consumption'),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          suffixText: 'W',
+                          contentPadding: const EdgeInsets.all(16),
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                  ],
+                ),
+                BlocBuilder<MiningInfoBloc, MiningInfoState>(
+                  builder: (context, state) {
+                    if (state is MiningInfoSuccess) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: ValueListenableBuilder<TextEditingValue>(
+                          builder: (_, consumption, __) => MiningInfoDetails(
+                            miningData: state.miningData,
+                            consumption: consumption.text.isNotEmpty ? int.parse(consumption.text) : 0,
+                          ),
+                          valueListenable: consumptionController,
+                        ),
+                      );
+                    }
+                    return const CircularProgressIndicator();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
