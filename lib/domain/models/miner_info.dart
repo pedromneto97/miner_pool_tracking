@@ -10,6 +10,7 @@ class MinerInfo extends Equatable {
   final double unpaid;
   final double totalPaid;
   final double pending;
+  final double customPayout;
 
   const MinerInfo({
     required this.average24h,
@@ -17,6 +18,7 @@ class MinerInfo extends Equatable {
     required this.unpaid,
     required this.pending,
     required this.totalPaid,
+    required this.customPayout,
   });
 
   factory MinerInfo.fromJson(Map<String, dynamic> json) => _$MinerInfoFromJson(json);
@@ -24,5 +26,12 @@ class MinerInfo extends Equatable {
   Map<String, dynamic> toJson() => _$MinerInfoToJson(this);
 
   @override
-  List<Object?> get props => [average24h, average7d, unpaid, totalPaid, pending];
+  List<Object?> get props => [
+        average24h,
+        average7d,
+        unpaid,
+        totalPaid,
+        pending,
+        customPayout,
+      ];
 }

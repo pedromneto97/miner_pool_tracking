@@ -12,6 +12,7 @@ MinerInfo _$MinerInfoFromJson(Map<String, dynamic> json) => MinerInfo(
       unpaid: (json['unpaid'] as num).toDouble(),
       pending: (json['pending'] as num).toDouble(),
       totalPaid: (json['totalPaid'] as num).toDouble(),
+      customPayout: (json['customPayout'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$MinerInfoToJson(MinerInfo instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$MinerInfoToJson(MinerInfo instance) => <String, dynamic>{
       'unpaid': instance.unpaid,
       'totalPaid': instance.totalPaid,
       'pending': instance.pending,
+      'customPayout': instance.customPayout,
     };
