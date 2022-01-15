@@ -45,54 +45,8 @@ class MiningInfoDetails extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        SizedBox(
-          height: 152,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text('Balance'),
-                  const SizedBox(height: 16),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Unpaid: ',
-                      children: [
-                        TextSpan(
-                          text: miningData.minerInfo.unpaid.toString(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Pending: ',
-                      children: [
-                        TextSpan(
-                          text: miningData.minerInfo.pending.toString(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  Text.rich(
-                    TextSpan(
-                      text: 'Total paid: ',
-                      style: Theme.of(context).textTheme.bodyText1,
-                      children: [
-                        TextSpan(
-                          text: miningData.minerInfo.totalPaid.toString(),
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        BalanceCard(
+          miningData: miningData,
         ),
         const SizedBox(
           height: 16,
