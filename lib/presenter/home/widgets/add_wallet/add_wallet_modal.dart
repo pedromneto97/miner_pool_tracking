@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../domain/domain.dart';
 import 'widgets/widgets.dart';
@@ -27,12 +28,12 @@ class _AddWalletModalState extends State<AddWalletModal> {
   }
 
   void onSubmit([_]) async {
-    await const AddWalletUseCase().call(
-      address: controller.text,
-      symbol: coinNotifier.value,
-      isSolo: soloPoolNotifier.value,
-      consumption: consumptionController.text.isNotEmpty ? int.parse(consumptionController.text) : 0,
-    );
+    await GetIt.I.get<AddWalletUseCase>().call(
+          address: controller.text,
+          symbol: coinNotifier.value,
+          isSolo: soloPoolNotifier.value,
+          consumption: consumptionController.text.isNotEmpty ? int.parse(consumptionController.text) : 0,
+        );
     context.router.pop();
   }
 

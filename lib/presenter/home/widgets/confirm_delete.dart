@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../domain/domain.dart';
 
@@ -17,13 +19,13 @@ class ConfirmDelete extends StatelessWidget {
       content: const Text('This will delete the wallet from saved wallets'),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: context.router.pop,
           child: const Text('CANCEL'),
         ),
         TextButton(
           onPressed: () async {
-            await const RemoveWalletUseCase().call(wallet);
-            Navigator.of(context).pop();
+            await GetIt.I.get<RemoveWalletUseCase>().call(wallet);
+            context.router.pop();
           },
           child: const Text('ACCEPT'),
         ),

@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    const GetWalletsUseCase().call();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) => GetIt.I.get<GetWalletsUseCase>().call());
   }
 
   void onPressAdd() => showModalBottomSheet(
