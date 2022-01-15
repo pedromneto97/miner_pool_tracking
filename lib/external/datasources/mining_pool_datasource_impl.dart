@@ -39,6 +39,16 @@ class MiningPoolDatasourceImplementation extends MiningPoolDatasource {
           case 'customPayout':
             miningPoolInfoMap['customPayout'] = num.parse(value);
             break;
+          case 'history':
+            miningPoolInfoMap['history'] = (value as List<dynamic>)
+                .map<Map<String, dynamic>>(
+                  (e) => {
+                    'time': e['t'],
+                    'hashRate': e['h'],
+                    'hashRate2hAverage': e['havg2h'],
+                  },
+                )
+                .toList(growable: false);
         }
       });
 
