@@ -13,9 +13,12 @@ class HomeDrawer extends StatelessWidget {
         children: [
           ListTile(
             title: const Text('Settings'),
-            onTap: () => AutoRouter.of(context).push(
-              const SettingsRoute(),
-            ),
+            onTap: () {
+              context.router.pop();
+              context.router.push(
+                const SettingsRoute(),
+              );
+            },
           )
         ],
       ),
