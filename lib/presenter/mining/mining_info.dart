@@ -42,7 +42,7 @@ class _MiningInfoPageState extends State<MiningInfoPage> {
             title: Row(
               children: [
                 Hero(
-                  tag: 'coin_image',
+                  tag: 'coin_image_${widget.wallet.address}',
                   child: Image.network(
                     imageUrlFromCoinSymbol(widget.wallet.symbol),
                     width: 24,
@@ -51,7 +51,7 @@ class _MiningInfoPageState extends State<MiningInfoPage> {
                 ),
                 const SizedBox(width: 16),
                 Hero(
-                  tag: 'wallet_type',
+                  tag: 'wallet_type_${widget.wallet.address}',
                   child: Text(
                     '${widget.wallet.symbol.name.capitalize()} wallet',
                     style: Theme.of(context).textTheme.headline5,

@@ -19,7 +19,7 @@ class WalletListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Hero(
-        tag: 'coin_image',
+        tag: 'coin_image_${wallet.address}',
         child: Image.network(
           imageUrlFromCoinSymbol(
             wallet.symbol,
@@ -29,7 +29,7 @@ class WalletListItem extends StatelessWidget {
         ),
       ),
       title: Hero(
-        tag: 'wallet_type',
+        tag: 'wallet_type_${wallet.address}',
         child: Text(
           '${wallet.symbol.name.capitalize()} wallet',
           style: Theme.of(context).textTheme.bodyText1,
