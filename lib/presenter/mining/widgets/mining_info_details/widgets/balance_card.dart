@@ -14,7 +14,7 @@ class BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 160 + 32,
+      height: 200,
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
