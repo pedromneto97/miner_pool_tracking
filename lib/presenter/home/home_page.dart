@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import '../../domain/domain.dart';
 import '../../widgets/touchable_opacity.dart';
 import '../app/app_router.dart';
-import 'widgets/add_wallet_modal.dart';
+import 'widgets/add_wallet/add_wallet_modal.dart';
 import 'widgets/confirm_delete.dart';
 import 'widgets/home_drawer.dart';
 
