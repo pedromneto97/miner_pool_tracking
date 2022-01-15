@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import 'miner_info.dart';
-import 'pool_info.dart';
+import 'miner/miner_info.dart';
+import 'pool/pool_info.dart';
 
 class MiningData extends Equatable {
   final MinerInfo minerInfo;

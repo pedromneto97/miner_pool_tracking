@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pool_info.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(createToJson: false)
 class PoolInfo extends Equatable {
   final double minerReward;
   final double blockTime;
@@ -18,8 +18,6 @@ class PoolInfo extends Equatable {
   });
 
   factory PoolInfo.fromJson(Map<String, dynamic> json) => _$PoolInfoFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PoolInfoToJson(this);
 
   double get estimatedRewardPerSecondPerSol => minerReward / (networkHash * blockTime);
 

@@ -13,13 +13,7 @@ MinerInfo _$MinerInfoFromJson(Map<String, dynamic> json) => MinerInfo(
       pending: (json['pending'] as num).toDouble(),
       totalPaid: (json['totalPaid'] as num).toDouble(),
       customPayout: (json['customPayout'] as num).toDouble(),
+      history: (json['history'] as List<dynamic>)
+          .map((e) => AddressHistory.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
-
-Map<String, dynamic> _$MinerInfoToJson(MinerInfo instance) => <String, dynamic>{
-      'average24h': instance.average24h,
-      'average7d': instance.average7d,
-      'unpaid': instance.unpaid,
-      'totalPaid': instance.totalPaid,
-      'pending': instance.pending,
-      'customPayout': instance.customPayout,
-    };

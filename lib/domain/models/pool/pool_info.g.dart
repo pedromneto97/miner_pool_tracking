@@ -12,10 +12,3 @@ PoolInfo _$PoolInfoFromJson(Map<String, dynamic> json) => PoolInfo(
       networkHash: (json['networkHash'] as num).toDouble(),
       minimumPayment: (json['minimumPayment'] as num).toDouble(),
     );
-
-Map<String, dynamic> _$PoolInfoToJson(PoolInfo instance) => <String, dynamic>{
-      'minerReward': instance.minerReward,
-      'blockTime': instance.blockTime,
-      'networkHash': instance.networkHash,
-      'minimumPayment': instance.minimumPayment,
-    };
