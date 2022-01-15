@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/domain.dart';
+import '../../../../domain/domain.dart';
+import 'widgets/widgets.dart';
 
 class AddWalletModal extends StatefulWidget {
   const AddWalletModal({Key? key}) : super(key: key);
@@ -13,12 +15,14 @@ class _AddWalletModalState extends State<AddWalletModal> {
   final controller = TextEditingController();
   final coinNotifier = ValueNotifier<CoinSymbol>(CoinSymbol.flux);
   final soloPoolNotifier = ValueNotifier<bool>(false);
+  final consumptionController = TextEditingController(text: '');
 
   @override
   void dispose() {
     controller.dispose();
     coinNotifier.dispose();
     soloPoolNotifier.dispose();
+    consumptionController.dispose();
     super.dispose();
   }
 
@@ -27,8 +31,9 @@ class _AddWalletModalState extends State<AddWalletModal> {
       address: controller.text,
       symbol: coinNotifier.value,
       isSolo: soloPoolNotifier.value,
+      consumption: consumptionController.text.isNotEmpty ? int.parse(consumptionController.text) : 0,
     );
-    Navigator.of(context).pop();
+    context.router.pop();
   }
 
   @override
@@ -48,45 +53,21 @@ class _AddWalletModalState extends State<AddWalletModal> {
                 ),
                 prefixIcon: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: ValueListenableBuilder<CoinSymbol>(
-                    valueListenable: coinNotifier,
-                    builder: (context, value, child) {
-                      return DropdownButton<CoinSymbol>(
-                        alignment: Alignment.center,
-                        iconSize: 16,
-                        items: CoinSymbol.values
-                            .map<DropdownMenuItem<CoinSymbol>>(
-                              (e) => DropdownMenuItem(
-                                child: Center(
-                                  child: Image.network(
-                                    'https://minerpool.org/images/${e.name}.png',
-                                    width: 24,
-                                    height: 24,
-                                    cacheHeight: 160,
-                                    cacheWidth: 160,
-                                  ),
-                                ),
-                                value: e,
-                              ),
-                            )
-                            .toList(growable: false),
-                        onChanged: (newValue) => coinNotifier.value = newValue!,
-                        value: value,
-                      );
-                    },
+                  child: CoinSymbolDropdown(
+                    controller: coinNotifier,
                   ),
                 ),
               ),
               onFieldSubmitted: onSubmit,
             ),
-            ValueListenableBuilder<bool>(
-              valueListenable: soloPoolNotifier,
-              child: const Text('Is solo pool'),
-              builder: (context, value, child) => CheckboxListTile(
-                value: value,
-                onChanged: (value) => soloPoolNotifier.value = value!,
-                title: child,
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: ConsumptionInput(
+                controller: consumptionController,
               ),
+            ),
+            SoloPoolCheckbox(
+              controller: soloPoolNotifier,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
