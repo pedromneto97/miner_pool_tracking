@@ -5,7 +5,7 @@ import '../../../utils/string_extension.dart';
 import '../../domain/domain.dart';
 import '../../utils/image_utils.dart';
 import 'bloc/mining_info_bloc.dart';
-import 'widgets/mining_info_details/mining_info_details.dart';
+import 'widgets/widgets.dart';
 
 class MiningInfoPage extends StatefulWidget {
   final Wallet wallet;
@@ -24,42 +24,71 @@ class _MiningInfoPageState extends State<MiningInfoPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       lazy: false,
-      create: (context) => MiningInfoBloc()
-        ..add(
-          GetMiningDataEvent(
-            wallet: widget.wallet,
+      create: (context) {
+        final bloc = MiningInfoBloc();
+        WidgetsBinding.instance!.addPostFrameCallback(
+          (_) => bloc.add(
+            GetMiningDataEvent(
+              wallet: widget.wallet,
+            ),
           ),
-        ),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Image.network(
-                imageUrlFromCoinSymbol(widget.wallet.symbol),
-                width: 24,
-                height: 24,
-              ),
-              const SizedBox(width: 16),
-              Text(
-                '${widget.wallet.symbol.name.capitalize()} wallet',
-              ),
-            ],
+        );
+        return bloc;
+      },
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Row(
+              children: [
+                Hero(
+                  tag: 'coin_image',
+                  child: Image.network(
+                    imageUrlFromCoinSymbol(widget.wallet.symbol),
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Hero(
+                  tag: 'wallet_type',
+                  child: Text(
+                    '${widget.wallet.symbol.name.capitalize()} wallet',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+              ],
+            ),
+            bottom: const TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(
+                    Icons.attach_money_rounded,
+                  ),
+                ),
+                Tab(
+                  icon: Icon(
+                    Icons.show_chart_rounded,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        body: SingleChildScrollView(
-          clipBehavior: Clip.antiAlias,
-          primary: true,
-          child: Padding(
+          body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: BlocBuilder<MiningInfoBloc, MiningInfoState>(
               builder: (context, state) {
                 if (state is MiningInfoSuccess) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: MiningInfoDetails(
-                      miningData: state.miningData,
-                      consumption: widget.wallet.consumption,
-                    ),
+                  return TabBarView(
+                    children: [
+                      MiningInfoDetails(
+                        miningData: state.miningData,
+                        consumption: widget.wallet.consumption,
+                      ),
+                      HistoryChart(
+                        historyList: state.miningData.minerInfo.history,
+                      ),
+                    ],
                   );
                 }
                 return const Center(
