@@ -40,7 +40,7 @@ class LabeledText extends StatelessWidget {
                 message: tooltipMessage,
                 child: const Icon(
                   Icons.info_outline_rounded,
-                  size: 12,
+                  size: 16,
                 ),
                 triggerMode: TooltipTriggerMode.tap,
               ),
