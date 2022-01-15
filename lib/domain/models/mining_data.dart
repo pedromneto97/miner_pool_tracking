@@ -17,5 +17,5 @@ class MiningData extends Equatable {
   double get estimatedRewardPerSec => minerInfo.average24h * poolInfo.estimatedRewardPerSecondPerSol;
 
   @override
-  List<Object?> get props => [minerInfo, poolInfo];
+  List<Object?> get props => [minerInfo, poolInfo, cryptoToUSDRate];
 }

@@ -24,5 +24,5 @@ class MinerInfo extends Equatable {
   Map<String, dynamic> toJson() => _$MinerInfoToJson(this);
 
   @override
-  List<Object?> get props => [average24h, average7d, unpaid];
+  List<Object?> get props => [average24h, average7d, unpaid, totalPaid, pending];
 }
