@@ -10,12 +10,14 @@ class AddWalletUseCase {
     required String address,
     required CoinSymbol symbol,
     required bool isSolo,
+    required int consumption,
   }) =>
       GetIt.I<WalletService>().addWallet(
         Wallet(
           address: address,
           symbol: symbol,
           isSolo: isSolo,
+          consumption: consumption,
         ),
       );
 }
