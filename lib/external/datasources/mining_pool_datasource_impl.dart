@@ -36,6 +36,9 @@ class MiningPoolDatasourceImplementation extends MiningPoolDatasource {
           case 'paid':
             miningPoolInfoMap['totalPaid'] = value;
             break;
+          case 'customPayout':
+            miningPoolInfoMap['customPayout'] = num.parse(value);
+            break;
         }
       });
 
@@ -61,6 +64,10 @@ class MiningPoolDatasourceImplementation extends MiningPoolDatasource {
             break;
           case 'poolStats':
             poolInfo['networkHash'] = double.parse(value['networkSols']);
+            break;
+          case 'minimumPayment':
+            poolInfo['minimumPayment'] = value;
+            break;
         }
       });
       return PoolInfo.fromJson(poolInfo);
