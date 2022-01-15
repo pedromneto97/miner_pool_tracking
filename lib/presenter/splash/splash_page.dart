@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mining_profit/utils/image_utils.dart';
 
 import '../../domain/domain.dart';
 import '../app/app_router.dart';
@@ -17,6 +18,14 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    for (CoinSymbol element in CoinSymbol.values) {
+      precacheImage(
+        NetworkImage(
+          imageUrlFromCoinSymbol(element),
+        ),
+        context,
+      );
+    }
     return FutureBuilder<bool>(
       future: authenticationFuture,
       builder: (context, snapshot) {
