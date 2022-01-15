@@ -9,8 +9,8 @@ part 'address_history.g.dart';
 @DateTimeEpochConverter()
 class AddressHistory extends Equatable {
   final DateTime time;
-  final String hashRate;
-  final String hashRate2hAverage;
+  final double hashRate;
+  final double hashRate2hAverage;
 
   const AddressHistory({
     required this.time,

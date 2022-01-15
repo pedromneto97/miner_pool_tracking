@@ -43,9 +43,9 @@ class MiningPoolDatasourceImplementation extends MiningPoolDatasource {
             miningPoolInfoMap['history'] = (value as List<dynamic>)
                 .map<Map<String, dynamic>>(
                   (e) => {
-                    'time': e['t'],
-                    'hashRate': e['h'],
-                    'hashRate2hAverage': e['havg2h'],
+                    'time': e['t'] * 1000,
+                    'hashRate': num.parse(e['h']),
+                    'hashRate2hAverage': num.parse(e['havg2h']),
                   },
                 )
                 .toList(growable: false);

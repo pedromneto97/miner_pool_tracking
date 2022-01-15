@@ -9,6 +9,6 @@ part of 'address_history.dart';
 AddressHistory _$AddressHistoryFromJson(Map<String, dynamic> json) =>
     AddressHistory(
       time: const DateTimeEpochConverter().fromJson(json['time'] as int),
-      hashRate: json['hashRate'] as String,
-      hashRate2hAverage: json['hashRate2hAverage'] as String,
+      hashRate: (json['hashRate'] as num).toDouble(),
+      hashRate2hAverage: (json['hashRate2hAverage'] as num).toDouble(),
     );
