@@ -36,6 +36,7 @@ class LabeledText extends StatelessWidget {
         ? Row(
             children: [
               text,
+              const SizedBox(width: 4),
               Tooltip(
                 message: tooltipMessage,
                 child: const Icon(

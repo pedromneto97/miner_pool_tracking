@@ -32,19 +32,19 @@ class BalanceCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           LabeledText(
-                            label: 'Unpaid: ',
+                            label: 'Unpaid',
                             text: miningData.minerInfo.unpaid.toString(),
                             tooltipMessage: 'Rewards from blocks found with less\n than 100 confirmations',
                           ),
                           const Divider(),
                           LabeledText(
-                            label: 'Pending: ',
+                            label: 'Pending',
                             text: miningData.minerInfo.pending.toString(),
                             tooltipMessage: 'Rewards ready to be paid,\n but below payout threshold',
                           ),
                           const Divider(),
                           LabeledText(
-                            label: 'Total paid: ',
+                            label: 'Total paid',
                             text: miningData.minerInfo.totalPaid.toString(),
                             tooltipMessage: 'Total paid to this address',
                           ),
@@ -57,13 +57,13 @@ class BalanceCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           LabeledText(
-                            label: 'Min. payout: ',
+                            label: 'Min. payout',
                             text: miningData.poolInfo.minimumPayment.toString(),
                             tooltipMessage: 'Default pool minimum payout threshold',
                           ),
                           const Divider(),
                           LabeledText(
-                            label: 'Custom payout: ',
+                            label: 'Custom payout',
                             text: miningData.minerInfo.customPayout.toString(),
                           ),
                           const Divider(),
