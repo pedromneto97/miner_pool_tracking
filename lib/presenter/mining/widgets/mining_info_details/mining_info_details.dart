@@ -69,20 +69,22 @@ class MiningInfoDetails extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Provided by '),
-            TouchableOpacity(
-              onTap: onTapMinerstat,
-              child: const Text(
-                'minerstat',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
+        SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Provided by '),
+              TouchableOpacity(
+                onTap: onTapMinerstat,
+                child: const Text(
+                  'minerstat',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         )
       ],
     );
