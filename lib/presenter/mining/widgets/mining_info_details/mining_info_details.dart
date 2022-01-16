@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mining_profit/widgets/touchable_opacity.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../domain/domain.dart';
 import 'widgets/widgets.dart';
@@ -14,10 +16,19 @@ class MiningInfoDetails extends StatelessWidget {
     required this.consumption,
   }) : super(key: key);
 
+  void onTapMinerstat() async {
+    const url = 'https://minerstat.com/';
+    final canLaunchUrl = await canLaunch(url);
+    if (canLaunchUrl) {
+      await launch(url);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final numberFormat = NumberFormat.compact();
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,6 +66,24 @@ class MiningInfoDetails extends StatelessWidget {
           miningData: miningData,
           consumption: consumption,
         ),
+        const SizedBox(
+          height: 16,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Provided by '),
+            TouchableOpacity(
+              onTap: onTapMinerstat,
+              child: const Text(
+                'minerstat',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
